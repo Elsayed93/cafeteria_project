@@ -1,0 +1,14 @@
+/****** user home styles ******/
+#navbar1, #adminNav {
+    background-color: #999999 !important;
+}
+
+.prodImg:hover {
+    cursor: pointer;
+}
+
+#test{
+    width: 100px;
+    height: 100px;
+    background-color: red;
+}
