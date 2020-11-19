@@ -47,9 +47,9 @@
                      * }
                      * 
                      */
-                    // $userImageQuery = "SELECT profile_picture FROM users WHERE is_admin=0 LIMIT 1 ";
-                    $adminImageQuery = "SELECT profile_picture FROM users WHERE is_admin=1 LIMIT 1 ";
-                    $queryStmt = $conn->prepare($adminImageQuery);
+                    $userImageQuery = "SELECT profile_picture FROM users WHERE is_admin=0 LIMIT 1 ";
+                    // $adminImageQuery = "SELECT profile_picture FROM users WHERE is_admin=1 LIMIT 1 ";
+                    $queryStmt = $conn->prepare($userImageQuery);
                     $resul = $queryStmt->execute();
                     $userImg = $queryStmt->fetch(PDO::FETCH_OBJ);
                     echo "<img src='images/" . $userImg->profile_picture . "' width='50' height= '50' style='border-radius: 30px;' >";
@@ -221,7 +221,7 @@
     </div>
 
 
-    <?php
+      <?php /* 
         function showOrder() {
             $serverName = "localhost";
             $userName = "root";
@@ -245,13 +245,13 @@
                 echo $result->product_name . '<br>';
             }
 
-        }
+        }*/
 
-    ?>
+    ?> 
 
 
     <script src="js/jQuery.js"></script>
     <script src="js/bootstrap.bundle.min.js"></script>
-    <!-- <script src="js/main.js"></script> -->
+    <script src="js/main.js"></script>
 </body>
 </html>
