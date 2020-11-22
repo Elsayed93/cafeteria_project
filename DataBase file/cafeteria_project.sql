@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 14, 2020 at 09:00 PM
+-- Generation Time: Nov 15, 2020 at 08:24 PM
 -- Server version: 10.4.14-MariaDB
 -- PHP Version: 7.4.10
 
@@ -54,10 +54,20 @@ CREATE TABLE `orders_products` (
 
 CREATE TABLE `products` (
   `product_id` int(11) NOT NULL,
+  `product_name` varchar(50) NOT NULL,
   `price` varchar(20) NOT NULL,
   `category` varchar(30) NOT NULL,
-  `product_profile` varchar(50) NOT NULL
+  `product_profile` varchar(50) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `products`
+--
+
+INSERT INTO `products` (`product_id`, `product_name`, `price`, `category`, `product_profile`) VALUES
+(1, 'tea', '5 LE', 'Hot Drinks', NULL),
+(2, 'cofee', '10 LE', 'Hot Drinks', NULL),
+(3, 'cola', '5 LE', 'cold Drinks', NULL);
 
 -- --------------------------------------------------------
 
@@ -71,10 +81,21 @@ CREATE TABLE `users` (
   `email` varchar(50) NOT NULL,
   `password` varchar(50) NOT NULL,
   `room_number` int(11) NOT NULL,
-  `EXT` varchar(15) NOT NULL,
-  `profile_picture` varchar(30) NOT NULL,
+  `EXT` varchar(15) DEFAULT NULL,
+  `profile_picture` varchar(30) DEFAULT NULL,
   `is_admin` tinyint(1) NOT NULL DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `users`
+--
+
+INSERT INTO `users` (`user_id`, `name`, `email`, `password`, `room_number`, `EXT`, `profile_picture`, `is_admin`) VALUES
+(1, 'omar pero', 'omar@cafee.com', 'Omar123@#', 112, NULL, NULL, 0),
+(2, 'sherief', 'sherief@cafee.com', 'Sherief123@#', 113, NULL, NULL, 0),
+(3, 'Elsayed Elbeshry', 'elsayed@cafee.com', 'Elsayed123@#', 113, NULL, NULL, 0),
+(4, 'Reem Mousa', 'reem@cafee.com', 'Reem123@#', 114, NULL, NULL, 0),
+(5, 'Elene Malak', 'elene@cafee.com', 'Elene123@#', 112, NULL, NULL, 0);
 
 --
 -- Indexes for dumped tables
@@ -120,13 +141,13 @@ ALTER TABLE `orders`
 -- AUTO_INCREMENT for table `products`
 --
 ALTER TABLE `products`
-  MODIFY `product_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `product_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=181;
 
 --
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- Constraints for dumped tables
