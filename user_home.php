@@ -5,63 +5,62 @@
     <div class="container mt-5 mb-5">
         <div class="row">
             <!------- my order, total price, Notes, Room Number  and confirm order ------->
-            <div class="col-12 col-md-4" style="border: solid blue 2px;">
-            <!-- first nested row  -->
-                <div class="row" style="min-height: 100px; border: solid brown 2px;" id="myOrder">
-                  
-                </div>
-                <h4>Notes</h4>
-                    <textarea name="" id="" cols="27" rows="5"></textarea>
-                <br><br>
-                Room
-                <select name="" id="">
-                    <?php
-                        try {
-                            $roomQuery = "SELECT room_number 
-                            FROM users"; // >>>>>>>>>>>>>>>>>>>  where user_id= user from form 
-
-                            $roomStmt = $conn->prepare($roomQuery);
-                            $excuteQuery = $roomStmt->execute();
-                            while($roomNo = $roomStmt->fetch(PDO::FETCH_OBJ)) {
-                                echo "<option>". $roomNo->room_number. "</option>";
-                            }
-                    ?>
-                </select>
-                <hr style="border-top: 1px solid rgba(0, 0, 0, 0.5);">
-
-                    <?php
-                        } catch (PDOException $th) {
-                            echo "Connection failed: " . $th->getMessage();
-                        }
-                    ?>    
+            <div class="col-12 col-md-4" style="border: solid blue 1px;">
+            
+                <form class="orderForm">
+                    <!-- first nested row  -->
+                    <div class="row mt-3 mx-1" style="min-height: 100px; border: 1px solid;" id="myOrder">
                     
-                <!-- second nested row  -->
-                <div class="row">
-                    <div class="col-12 col-md-auto ml-md-auto"><strong>EGP test</strong> </div>
-                </div>
-
-                <!-- third nested row  -->
-                <div class="row">
-                <div class="col-12 col-md-auto ml-md-auto mt-5">
-                    <button type="submit">Confirm</button>
-                </div>
-                </div>
+                    </div>
+                    <br><br>
+                    <h4>Notes</h4>
+                        <textarea name="notes" id="notesId" cols="27" rows="5"></textarea>
+                    <br><br>
+                    <label for="rooms">Room</label> 
+                    <select name="rooms" id="rooms">
+                        <?php
+                            try {
+                                $roomQuery = "SELECT room_number 
+                                FROM users"; 
+    
+                                $roomStmt = $conn->prepare($roomQuery);
+                                $excuteQuery = $roomStmt->execute();
+                                while($roomNo = $roomStmt->fetch(PDO::FETCH_OBJ)) {
+                                    echo "<option value='". $roomNo->room_number ."'> " . $roomNo->room_number. "</option>";
+                                }
+                        ?>
+                    </select>
+                    <hr style="border-top: 1px solid rgba(0, 0, 0, 0.5);">
+    
+                        <?php
+                            } catch (PDOException $th) {
+                                echo "Connection failed: " . $th->getMessage();
+                            }
+                        ?>    
+                        
+                    <!-- second nested row  -->
+                    <div class="row">
+                        <div class="col-12 col-md-auto ml-md-auto" id='orderPrice'><strong>EGP </strong> </div>
+                    </div>
+    
+                    <!-- third nested row  -->
+                    <div class="row">
+                        <div class="col-12 col-md-auto ml-md-auto mt-5">
+                            <button type="button" id="confirmBtn">Confirm</button>
+                        </div>
+                    </div>
+    
+                </form>
 
             </div>
 
 
-            <!-- latest order and MENU -->
+            <!------ latest order and MENU ------->
             <div class="col-12 col-md-8">
                 <h3>Latest Order</h3>
                 <?php
-                    $serverName = "localhost";
-                    $userName = "root";
-                    $password = "";
-                    
+
                     try {
-                        $conn = new PDO("mysql:host=$serverName;dbname=cafeteria_project", $userName, $password);
-                        // set the PDO error mode to exception
-                        $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
                         $latestOrderQuery = "SELECT o.order_id, product_name, product_quantity
                         FROM orders o, orders_products op
@@ -116,24 +115,24 @@
                             $allProducts[] = $products ;
             
                         }  
-                        echo "<form action='user_home.php' method='POST' enctype='multipart/form-data'>
+                        echo "
                         <table border='1' cellpadding='10px'>
                             <tr>
                                 <th>product_name</th>
-                                <th>price</th>
+                                <th>price (EGP)</th>
                                 <th>category</th>
                                 <th>product_profile</th>
                             </tr>";
             
                         foreach($allProducts as $item) {
                             echo "<tr><td style='text-align:center' class='prodName'>" . $item->product_name . "</td>".
-                            "<td>" . $item->price . "</td>".
+                            "<td>" . $item->price . " EGP</td>".
                             "<td>" . $item->category . "</td>".
                             "<td><img value=" .$item->product_id . " src='images/" . $item->product_profile . "' width='100px' height='100px' class='prodImg'></td></tr>";
                             
     
                         }
-                        echo "</table> </form>";
+                        echo "</table>";
                         // $conn = null;
                     } catch(PDOException $e) {
                       echo "Connection failed: " . $e->getMessage();

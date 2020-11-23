@@ -9,42 +9,112 @@
 </head>
 
 <body>
-    <div id="test">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-light" id="adminNav">
+        <a class="navbar-brand" href="admin_home.php"><img src="images/logo3.jpg" alt="" width="70px"></a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
 
-    </div>
-    <nav class="navbar navbar-expand-lg navbar-light bg-light" id="adminNav">
-    <a class="navbar-brand" href="#">Navbar</a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-    </button>
-
-    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-        <ul class="navbar-nav mr-auto">
-        <li class="nav-item active">
-            <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
-        </li>
-        <li class="nav-item active">
-            <a class="nav-link" href="#">Products</a>
-        </li>
-        <li class="nav-item active">
-            <a class="nav-link" href="#">Users</a>
-        </li>
-        <li class="nav-item active">
-            <a class="nav-link" href="#">Manual Order</a>
-        </li>
-        <li class="nav-item active">
-            <a class="nav-link" href="#">Checks</a>
-        </li>
-        </ul>
-        <form class="form-inline my-2 my-lg-0">
-        <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
-        <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-        </form>
-    </div>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item active">
+                    <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+                </li>
+                <li class="nav-item active">
+                    <a class="nav-link" href="#">Products</a>
+                </li>
+                <li class="nav-item active">
+                    <a class="nav-link" href="#">Users</a>
+                </li>
+                <li class="nav-item active">
+                    <a class="nav-link" href="#">Manual Order</a>
+                </li>
+                <li class="nav-item active">
+                    <a class="nav-link" href="#">Checks</a>
+                </li>
+            </ul>
+        </div>
     </nav>
 
+    <!-- start of fluid container -->
+    <div class="container mt-5 mb-5">
+        <div class="row">
+            <!------- my order, total price, Notes, Room Number  and confirm order ------->
+            <div class="col-12 col-md-4" style="border: solid blue 1px;">
+            
+                <form class="orderForm">
+                    <!-- first nested row  -->
+                    <div class="row mt-3 mx-1" style="min-height: 100px; border: 1px solid;" id="myOrder">
+                    
+                    </div>
+                    <br><br>
+                    <h4>Notes</h4>
+                        <textarea name="notes" id="notesId" cols="27" rows="5"></textarea>
+                    <br><br>
+                    <label for="rooms">Room</label> 
+                    <select name="rooms" id="rooms">
+                        <?php
+                        require('./connctionDB.php');
+                            try {
+                                $roomQuery = "SELECT room_number 
+                                FROM users"; 
     
+                                $roomStmt = $conn->prepare($roomQuery);
+                                $excuteQuery = $roomStmt->execute();
+                                while($roomNo = $roomStmt->fetch(PDO::FETCH_OBJ)) {
+                                    echo "<option value='". $roomNo->room_number ."'> " . $roomNo->room_number. "</option>";
+                                }
+                        ?>
+                    </select>
+                    <hr style="border-top: 1px solid rgba(0, 0, 0, 0.5);">
+    
+                        <?php
+                            } catch (PDOException $th) {
+                                echo "Connection failed: " . $th->getMessage();
+                            }
+                        ?>    
+                        
+                    <!-- second nested row  -->
+                    <div class="row">
+                        <div class="col-12 col-md-auto ml-md-auto" id='orderPrice'><strong>EGP </strong> </div>
+                    </div>
+    
+                    <!-- third nested row  -->
+                    <div class="row">
+                        <div class="col-12 col-md-auto ml-md-auto mt-5 mb-2">
+                            <button type="button" id="confirmBtn">Confirm</button>
+                        </div>
+                    </div>
+    
+                </form>
+            </div>
+            <!-- add to user and all products  -->
+            <div class="col-12 col-md-8" style="border: solid blue 1px;">
+                <div class="container-fluid">
+                    <div class="row">
+                        <h3>Add to user</h3>
+                        <select class=" form-control">
+                            <option>Default select</option>
+                        </select>
+                    </div>
+                    <hr style="border-top: 1px solid rgba(0, 0, 0, 0.5);">
+                    <div class="row">
 
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+            
+
+
+
+   
+
+    
 
 
     <script src="js/jQuery.js"></script>

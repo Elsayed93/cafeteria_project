@@ -1,4 +1,5 @@
 
+// when I click on the product image 
 $('.prodImg').on('click', function(){
     var id = $(this).attr('value');
         
@@ -14,15 +15,18 @@ $('.prodImg').on('click', function(){
     });
 });
 
-let counter = 0; 
-
+// when I increase my order item
+var counter = 1; 
 function upOrder(){
     counter ++;
-    var res1 = $('#counter').html(counter);
-    var result = $('#counter').html();
-    var res2 = $('#productPrice').attr('data-target'); 
-    $('#productPrice').html(result * res2);
+    let res1 = $('#counter').html(counter);
+    let result = $('#counter').html();
+    let res2 = $('#productPrice').attr('data-target'); 
+    let totalPrice = result * res2;
+    $('#productPrice').html('EGP ' + totalPrice);
     
+    // total order price 
+    $('#orderPrice').html('EGP ' + totalPrice);
     
     // $.ajax({
     //     method: 'GET',
@@ -37,21 +41,55 @@ function upOrder(){
 
 };
 
+// when I decrease my order item
 function downOrder(){
     counter --;
     
     if(counter >= 0) {
-        var res1 = $('#counter').html(counter);
-        var result = $('#counter').html();
-        var res2 = $('#productPrice').attr('data-target'); 
-        $('#productPrice').html(result * res2);
+        let res1 = $('#counter').html(counter);
+        let result = $('#counter').html();
+        let res2 = $('#productPrice').attr('data-target'); 
+        let totalPrice = result * res2;
+        $('#productPrice').html('EGP ' + totalPrice);
+
+        // total order price 
+        $('#orderPrice').html('EGP ' + totalPrice);
+
     
     }else {
         counter = 0;
     }
-   
-
 };
+
+
+// when I confirm my Order 
+$(document).on('click', '#confirmBtn', function(){
+    let myOrder = $('#myOrder').html();
+    console.log(myOrder);
+    let userNotes = $('#notesId').val();
+    console.log(userNotes);
+    let roomNo = $('#rooms').val();
+    console.log(roomNo);
+    let orderPrice = $('#orderPrice').html();
+    console.log(orderPrice);
+
+    $.ajax({
+      url: 'confirmOrder.php',
+      type: 'POST',
+      data: {
+        // 'save': 1,
+        'myOrder': myOrder,
+        'userNotes': userNotes,
+        'roomNo': roomNo,
+        'orderPrice': orderPrice
+      },
+      success: function(response){
+        $('#myOrder').val('');
+        $('#notesId').val('');
+        $('#myOrder').append(response);
+      }
+    });
+  });
 
 
 
