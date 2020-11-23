@@ -3,7 +3,7 @@
     background-color: #999999 !important;
 }
 
-.prodImg:hover {
+.prodImg:hover, .fa-chevron-up, .fa-chevron-down {
     cursor: pointer;
 }
 
@@ -11,8 +11,4 @@
     width: 100px;
     height: 100px;
     background-color: red;
-}
-
-#myOrder i {
-    cursor: pointer;
 }
