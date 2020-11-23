@@ -12,3 +12,7 @@
     height: 100px;
     background-color: red;
 }
+
+#myOrder i {
+    cursor: pointer;
+}

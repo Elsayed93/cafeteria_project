@@ -1,87 +1,17 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>user home</title>
-    <link rel="stylesheet" href="css/bootstrap.css">
-    <link rel="stylesheet" href="/cafeteria_project/css/style.css">
-</head>
-
-<body>
-    <!----------------------- start of navbar -------------------------------------->
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark" id="navbar1">
-        <a class="navbar-brand" href="#">Navbar</a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul class="navbar-nav mr-auto">
-            <li class="nav-item active">
-                <a class="nav-link" href="user_home.php">Home <span class="sr-only">(current)</span></a>
-            </li>
-            <li class="nav-item active">
-                <a class="nav-link" href="#">My Orders</a>
-            </li>
-            </ul>           
-        </div>
-
-        <div class="col-auto ml-auto text-white" id="righNavbar">
-        <span>
-            <?php 
-                $serverName = "localhost";
-                $userName = "root";
-                $password = "";
-
-                try {
-                    $conn = new PDO("mysql:host=$serverName;dbname=cafeteria_project", $userName, $password);
-                    // set the PDO error mode to exception
-                    $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-                    /**
-                     * if user {
-                     *      userImageQuery
-                     * }else if admin {
-                     *      adminImageQuery
-                     *      $adminImageQuery = "SELECT profile_picture FROM users WHERE is_admin=1 LIMIT 1 ";
-                     * }
-                     * 
-                     */
-                    $userImageQuery = "SELECT profile_picture FROM users WHERE is_admin=0 LIMIT 1 ";
-                    // $adminImageQuery = "SELECT profile_picture FROM users WHERE is_admin=1 LIMIT 1 ";
-                    $queryStmt = $conn->prepare($userImageQuery);
-                    $resul = $queryStmt->execute();
-                    $userImg = $queryStmt->fetch(PDO::FETCH_OBJ);
-                    echo "<img src='images/" . $userImg->profile_picture . "' width='50' height= '50' style='border-radius: 30px;' >";
-                    // $conn = null;
-    
-
-                } catch (PDOException $th) {
-                    echo "Connection failed: " . $th->getMessage();
-                }
-            
-
-            ?>
-        </span>
-        <span>user name</span>
-        </div>
-    </nav>
-    <!----------------- end of navbar ---------------------->
-
+<?php
+    require('./navBar.php');
+?>
     <!-- start of fluid container -->
-    <div class="container mt-5">
+    <div class="container mt-5 mb-5">
         <div class="row">
             <!------- my order, total price, Notes, Room Number  and confirm order ------->
             <div class="col-12 col-md-4" style="border: solid blue 2px;">
             <!-- first nested row  -->
                 <div class="row" style="min-height: 100px; border: solid brown 2px;" id="myOrder">
-                    <div class="col-12 col-md-3"></div>
-                    <div class="col-12 col-md-3"></div>
-                    <div class="col-12 col-md-3"></div>
-                    <div class="col-12 col-md-3">EGP </div>
+                  
                 </div>
                 <h4>Notes</h4>
-                <textarea name="" id="" cols="30" rows="5"></textarea>
+                    <textarea name="" id="" cols="27" rows="5"></textarea>
                 <br><br>
                 Room
                 <select name="" id="">
@@ -173,15 +103,8 @@
                 <!----------------------- showing all products ---------------------------->
                 <h3>MENU</h3>
                 <?php
-                    // $serverName = "localhost";
-                    // $userName = "root";
-                    // $password = "";
 
                     try {
-                        // $conn = new PDO("mysql:host=$serverName;dbname=cafeteria_project", $userName, $password);
-                        // // set the PDO error mode to exception
-                        // $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-
                         // show all products 
                         $selectQuery = "SELECT * FROM products";
                         $queryStatment = $conn->prepare($selectQuery);
@@ -193,23 +116,24 @@
                             $allProducts[] = $products ;
             
                         }  
-                        echo "<table border='1' cellpadding='10px'>
-                        <tr>
-                            <th>product_name</th>
-                            <th>price</th>
-                            <th>category</th>
-                            <th>product_profile</th>
-                        </tr>";
+                        echo "<form action='user_home.php' method='POST' enctype='multipart/form-data'>
+                        <table border='1' cellpadding='10px'>
+                            <tr>
+                                <th>product_name</th>
+                                <th>price</th>
+                                <th>category</th>
+                                <th>product_profile</th>
+                            </tr>";
             
                         foreach($allProducts as $item) {
-                            echo "<tr><td style='text-align:center'>" . $item->product_name . "</td>".
+                            echo "<tr><td style='text-align:center' class='prodName'>" . $item->product_name . "</td>".
                             "<td>" . $item->price . "</td>".
                             "<td>" . $item->category . "</td>".
-                            "<td><img src='images/" . $item->product_profile . "' width='100px' height='100px' class='prodImg' onclick='showOrder()'></td></tr>";
+                            "<td><img value=" .$item->product_id . " src='images/" . $item->product_profile . "' width='100px' height='100px' class='prodImg'></td></tr>";
                             
     
                         }
-                        echo "</table>";
+                        echo "</table> </form>";
                         // $conn = null;
                     } catch(PDOException $e) {
                       echo "Connection failed: " . $e->getMessage();
@@ -252,6 +176,7 @@
 
     <script src="js/jQuery.js"></script>
     <script src="js/bootstrap.bundle.min.js"></script>
-    <script src="js/main.js"></script>
+    <!-- <script src="js/main.js"></script> -->
+    <script src="js/main2.js"></script>
 </body>
 </html>
