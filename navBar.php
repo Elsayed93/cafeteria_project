@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,6 +8,24 @@
     <link rel="stylesheet" href="css/bootstrap.css">
     <link rel="stylesheet" href="/cafeteria_project/css/style.css">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.1/css/all.css" integrity="sha384-vp86vTRFVJgpjF9jiIGPEEqYqlDwgyBgEF109VFjmqGmIY/Y4HV4d3Gp2irVfcrp" crossorigin="anonymous">
+    <style>
+        table {
+            font-family: arial, sans-serif;
+            border-collapse: collapse;
+            width: 100%;
+        }
+
+        td,
+        th {
+            border: 1px solid #aaaaaa;
+            text-align: center;
+            padding: 8px;
+        }
+
+        tr:nth-child(even) {
+            background-color: #dddddd;
+        }
+    </style>
 </head>
 
 <body>
@@ -19,18 +38,18 @@
 
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav mr-auto">
-            <li class="nav-item active">
-                <a class="nav-link" href="user_home.php">Home <span class="sr-only">(current)</span></a>
-            </li>
-            <li class="nav-item active">
-                <a class="nav-link" href="#">My Orders</a>
-            </li>
-            </ul>           
+                <li class="nav-item active">
+                    <a class="nav-link" href="user_home.php">Home <span class="sr-only">(current)</span></a>
+                </li>
+                <li class="nav-item active">
+                    <a class="nav-link" href="#">My Orders</a>
+                </li>
+            </ul>
         </div>
 
         <div class="col-auto ml-auto text-white" id="righNavbar">
-        <span>
-            <?php 
+            <span>
+                <?php
                 // connection with Data Base
                 require('./connctionDB.php');
 
@@ -51,16 +70,16 @@
                     $userImg = $queryStmt->fetch(PDO::FETCH_OBJ);
                     echo "<img src='images/" . $userImg->profile_picture . "' width='50' height= '50' style='border-radius: 30px;' >";
                     // $conn = null;
-    
+
 
                 } catch (PDOException $th) {
                     echo "Connection failed: " . $th->getMessage();
                 }
-            
 
-            ?>
-        </span>
-        <span>user name</span>
+
+                ?>
+            </span>
+            <span>user name</span>
         </div>
     </nav>
     <!----------------- end of navbar ---------------------->
